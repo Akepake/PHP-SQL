@@ -1,39 +1,31 @@
-<?php
-  session_start();
-
-  /* If the session data does not exist (i.e we are starting a new session), try to set the session's data with 
-     the cookies that were saved when the user made his/her last login (i.e: the cookies that the client browser is sending in its HTTP GET request to this index.php script)
-     This is the code that allows the app to remember the user that last logged in to the app (in the browser/computer that's issuing the HTTP GET request) and left the app without logging out 
-  */
-  if (!isset($_SESSION['userid'])) {
-    if (isset($_COOKIE['userid']) && isset($_COOKIE['username'])) {
-      $_SESSION['userid'] = $_COOKIE['userid'];
-      $_SESSION['username'] = $_COOKIE['username'];
-      // Using city here is for demonstration purposes. In real applications, you should not save personal data in cookies
-      $_SESSION['city'] = $_COOKIE['city']; 
-    }
-  }
-?>
-
-<!DOCTYPE html>
-<html>
-
-<?php
- 
-  // Generate the navigation menu
-  if (isset($_SESSION['userid'])) {
-  	echo 'Hello, '. $_SESSION['username'] . '!'; 
-  	echo '<br>';
-  	echo 'Here is the proof that I remember you:<br>';
-    echo 'You were born in ' . $_SESSION['city'] . '!';
-    echo '<br><br>';
-    echo '<a href="logout.php">Log Out</a>';
-  }
-  else {
-    echo "Hi!<br>Sign Up if you don't have an account.<br>Login if you already have an account.<br>";
-  	echo '<a href="login.php">Log In</a><br>';
-    echo '<a href="signup.php">Sign Up</a>';
-  }
-?>
-
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>R0315 - Web App Development with PHP/SQL - Code for Hands on Exercises</h1>
+    <?php
+    /**
+     * Created by PhpStorm.
+     * User: MEILOHI
+     * Date: 23.11.2018
+     * Time: 10.34
+     */
+        $dir    = getcwd (  );
+        $files = scandir($dir, 1);
+        $html = '<ul>';
+        foreach ($files as $key => $value) {
+            if(is_dir($value) && substr($value, 0,1 )!=".") {
+                $html .= '<li><a href="' . $value . '">' . $value . '</a></li>';
+            }
+        }
+        $html .= '</ul>';
+        echo $html;
+    ?>
+</body>
 </html>
